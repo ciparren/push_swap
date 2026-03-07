@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   simple.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cintia <cintia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 17:03:26 by cintia            #+#    #+#             */
-/*   Updated: 2026/02/20 17:03:35 by cintia           ###   ########.fr       */
+/*   Updated: 2026/03/07 11:07:47 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void solve_simple(t_info *info)
+{
+    // Tu implementación O(n²)
+    // Puede ser bubblesort u otro algoritmo simple
+}
+
 
 void bubblesort(t_info *info)
 {
@@ -42,3 +49,45 @@ void bubblesort(t_info *info)
         i++;
     }
 }
+
+/*
+void bubblesort(t_info *info)
+{
+    int  i;
+    int  j;
+    int  swapped;
+    t_node *current;
+
+    if (!info->a || info->a->size < 2)
+        return ;
+    
+    i = 0;
+    while (i < info->a->size - 1)
+    {
+        swapped = 0;
+        j = 0;
+        current = info->a->top;
+        while (j < info->a->size - 1 - i)
+        {
+            if (current->value > current->next->value)
+            {
+                sa(info);
+                swapped = 1;
+            }
+            ra(info);
+            current = info->a->top;
+            j++;
+        }
+        // Al final de cada pasada, el elemento más grande está al final
+        // Necesitamos rotar para traer el inicio de nuevo al tope
+        // Pero como hemos estado rotando, nuestro "current" ya está en posición
+        
+        if (!swapped)
+            break;
+        i++;
+    }
+    // Asegurar que el mínimo quede al tope
+    while (info->a->top->value > info->a->top->next->value)
+        ra(info);
+}
+*/

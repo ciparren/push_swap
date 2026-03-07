@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cintia <cintia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:59:22 by cintia            #+#    #+#             */
-/*   Updated: 2026/02/20 17:00:29 by cintia           ###   ########.fr       */
+/*   Updated: 2026/03/07 11:04:23 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void    rr(t_info *info)
     // info->ops[4]++;
     if(!info->a || info->a->size < 2)
         return ;
-    info->a->top = info->a->top->prev;
+    info->a->top = info->a->top->next; //tenía puesto prev
      if(!info->b || info->b->size < 2)
         return ;
     info->b->top = info->b->top->next;
