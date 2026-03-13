@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   disorder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cintia <cintia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:17:47 by cintia            #+#    #+#             */
-/*   Updated: 2026/02/18 19:37:20 by cintia           ###   ########.fr       */
+/*   Updated: 2026/03/13 11:37:06 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,22 @@ return mistakes / total_pairs
 */
 #include "push_swap.h"
 
-float compute_disorder(t_stack a)
+float compute_disorder(t_stack *a)
 {
     t_node  *i;
     t_node  *j;
     long    mistakes;   // Contador de errores
     long    total_pairs;// Total de combinaciones
-    float   result;
 
-    result = 0.0;
+    if(a->size < 2)
+        return (0.0);
     mistakes = 0;
     total_pairs = 0;
-    i = a.top; 
-    while(i)
+    i = a->top; 
+    while(i->next != a->top)
     {
         j = i->next;
-        while(j)
+        while(j != a->top)
         {
             total_pairs++;
             if(i->value > j->value)
@@ -47,9 +47,7 @@ float compute_disorder(t_stack a)
         }
         i = i->next;
     }
-    if(total_pairs == 0.0)
+    if(total_pairs == 0)
         return  (0.0);
-    result = mistakes / total_pairs;
-
-    return (result);
+    return (mistakes / total_pairs);
 }

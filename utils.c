@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cintia <cintia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:15:03 by cintia            #+#    #+#             */
-/*   Updated: 2026/02/19 20:02:40 by cintia           ###   ########.fr       */
+/*   Updated: 2026/03/13 11:41:51 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "push_swap.h"
 
 // atoi pero para long
 long     ft_atol(const char *nptr)
@@ -66,4 +64,18 @@ int     ft_isdigit(int c)
         if (c >= '0' && c <= '9')
                 return (1);
         return (0);
+}
+
+const char *get_strategy_name(int strategy)
+{
+    if (strategy == SIMPLE)
+        return ("Simple / O(n²)");
+    else if (strategy == MEDIUM)
+        return ("Medium / O(n√n)");
+    else if (strategy == COMPLEX)
+        return ("Complex / O(n log n)");
+    else if (strategy == ADAPTIVE)
+        return ("Adaptive / O(?)");
+    else
+        return ("Unknown");
 }
