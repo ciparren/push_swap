@@ -15,7 +15,7 @@
  void solve_adaptive(t_info *info)
 {
     // Calculas disorder y eliges estrategia
-    info->disorder = compute_disorder(*info->a);
+    info->disorder = compute_disorder(info->a);
     
     if (info->disorder < 0.2f)
     {

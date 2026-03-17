@@ -74,13 +74,15 @@ void    rrr(t_info *info);
 // PARSER
 void append_node(t_info *info, int num);
 int check_dup(t_stack *a, int num);
-int check_dup(t_stack *a, int num);
 void error_exit(t_info *info);
 void process_number(char *str, t_info *info);
 int is_valid_number(char *arg);
 int is_flag(char *arg, t_info *info);
 void parse_args(int argc, char **argv, t_info *info);
 void free_stack(t_stack *stack);
+
+float compute_disorder(t_stack *a);
+int total_ops(t_info *info);
 
 void    solve_simple(t_info *info);
 void    solve_adaptive(t_info *info);
