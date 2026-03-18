@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cintia <cintia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 17:44:33 by cintia            #+#    #+#             */
-/*   Updated: 2026/02/20 09:52:53 by cintia           ###   ########.fr       */
+/*   Updated: 2026/03/18 10:22:07 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void    rra(t_info *info);
 void    rrb(t_info *info);
 void    rrr(t_info *info);
 
+void push_node(t_stack *stack, t_node *new_node);
+
 // PARSER
 void append_node(t_info *info, int num);
 int check_dup(t_stack *a, int num);
@@ -94,5 +96,28 @@ long     ft_atol(const char *nptr);
 int     ft_strncmp(const char *s1, const char *s2, size_t n);
 int     ft_isdigit(int c);
 void bubblesort(t_info *info);
+long long ft_sqrt(long long n);
+
+// benchmark
+void print_bench(t_info *info);
+t_node *pop_node(t_stack *stack);
+void bench_disorder(t_info *info);
+void bench_strategy(t_info *info);
+void bench_ops(t_info *info);   
+int total_ops(t_info *info);
+
+// Añadir al final de push_swap.h, antes del #endif
+
+// Funciones de libc
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
+void	ft_putfloat_fd(float num, int fd, int precision);
+
+
+
+void chunksort(t_info *info);
+
+
 
 #endif

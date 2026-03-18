@@ -6,17 +6,18 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 17:03:26 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/13 10:54:57 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/18 10:12:43 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+/*
 void solve_simple(t_info *info)
 {
     // Tu implementación O(n²)
     // Puede ser bubblesort u otro algoritmo simple
 }
+*/
 
 // TODO hacer un algoritmo que resuelva cuando tiene solo 2, 3 y 5 números la pila
 

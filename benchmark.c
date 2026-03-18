@@ -6,9 +6,10 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:15:03 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/13 11:47:28 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/18 10:18:06 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "push_swap.h"
 #include "ft_libc/libft.h"
 
@@ -16,16 +17,17 @@ void print_bench(t_info *info)
 {
     bench_disorder(info);
     bench_strategy(info);
-    bench_total_ops(info);
+    total_ops(info);
     bench_ops(info);
 }
-static void bench_disorder(t_info *info)
+
+void bench_disorder(t_info *info)
 {
     ft_putstr_fd("[bench] disorder: ",2);
     ft_putfloat_fd(info->disorder*100, 2, 2);
     ft_putstr_fd("%\n", 2);
 }
-static void bench_strategy(t_info *info)
+void bench_strategy(t_info *info)
 {
     if (info->strategy == 0)
     {
@@ -50,7 +52,7 @@ static void bench_strategy(t_info *info)
         ft_putstr_fd("[bench] strategy: Complex / O(n log n)\n", 2);
     }
 }
-static void bench_total_ops(t_info *info)
+void bench_total_ops(t_info *info)
 {
     ft_putstr_fd("[bench] total_ops: ", 2);
     ft_putnbr_fd(total_ops(info), 2);

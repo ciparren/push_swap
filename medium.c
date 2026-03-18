@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:17:47 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/13 11:18:50 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/18 10:14:59 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ void chunksort(t_info *info)
     int chunk; // redondeaos abajo, más sencillo, ara calcular los trozos que vamos a usar
     int curr_chunk;
     // ahora hay que ir cogiendo esos chunks hasta llegar a size completo de a e ir pasando a la pila B.
-    int max;
-    int i;
     
     if(!info->a || info->a->size < 2)
         return ;
-    chunk = calc_root(info->a->size);
+    chunk =  ft_sqrt(info->a->size);
     if(chunk == 0)
         chunk = 1;
     while(info->a->size > 0)
@@ -43,7 +41,7 @@ void chunksort(t_info *info)
 }
 
 // Función para calcular la raíz cuadrada entera
-static long long calc_root(long long n) {
+long long  ft_sqrt(long long n) {
 
     long long inicio;
     long long fin; 
@@ -72,7 +70,7 @@ static long long calc_root(long long n) {
     }
     return ans;
 }
-
+/*
 static int find_max(t_stack *b)
 {
     t_node *curr;
@@ -126,3 +124,4 @@ static void rot_max(t_info *info, int max_pos)
         }
     }
 }
+    */

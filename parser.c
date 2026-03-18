@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:14:06 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/13 11:24:18 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/18 09:52:08 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
  // TODO parsear si viene una parte de la pila entre comillas, ejemplo: "2 13 4 56 1" 4 3 2
  //TODO PARSEAR SI LA PILA B ESTÁ VACÍA.
+// TODO
+// En parser.c, falta:
+// 1. Manejar argumentos entre comillas: "1 2 3 4"
+// 2. Verificar que info->a y info->b están inicializados antes de usarlos
+// 3. En error_exit, estás llamando a free_stack con punteros no inicializados 
+
+
 void parse_args(int argc, char **argv, t_info *info)
 {
     int i;

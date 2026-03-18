@@ -1,192 +1,209 @@
-/* main.c - Programa completo para probar bubblesort */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/18 12:00:00 by ciparren          #+#    #+#             */
+/*   Updated: 2026/03/18 10:19:30 by ciparren         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_libc/libft.h"
 #include "push_swap.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-// Función para inicializar la estructura info
-void init_info(t_info *info, t_stack *stack_a, t_stack *stack_b)
+// Inicializar info
+void	init_info(t_info *info)
 {
-    stack_a->top = NULL;
-    stack_a->size = 0;
-    stack_b->top = NULL;
-    stack_b->size = 0;
-    
-    info->a = stack_a;
-    info->b = stack_b;
-    
-    for (int i = 0; i < 11; i++)
-        info->ops[i] = 0;
-    info->total_ops = 0;
-    info->bench = 0;
-    info->strategy = SIMPLE;
+	info->a = malloc(sizeof(t_stack));
+	info->b = malloc(sizeof(t_stack));
+	
+	if (!info->a || !info->b)
+	{
+		printf("Error: malloc failed\n");
+		exit(1);
+	}
+	
+	info->a->top = NULL;
+	info->a->size = 0;
+	info->b->top = NULL;
+	info->b->size = 0;
+	
+	for (int i = 0; i < 11; i++)
+		info->ops[i] = 0;
+	
+	info->total_ops = 0;
+	info->bench = 0;
+	info->strategy = SIMPLE;
+	info->disorder = 0.0f;
 }
 
-// Función para imprimir una pila de forma legible
-void print_stack_verbose(t_stack *stack, char *nombre)
+// Liberar memoria
+void	free_all(t_info *info)
 {
-    t_node *curr;
-    int i;
-    
-    if (!stack || stack->size == 0)
-    {
-        printf("%s: [vacía]\n", nombre);
-        return;
-    }
-    
-    printf("%s (size=%d): [", nombre, stack->size);
-    curr = stack->top;
-    i = 0;
-    while (i < stack->size)
-    {
-        printf("%d", curr->value);
-        if (i < stack->size - 1)
-            printf(", ");
-        curr = curr->next;
-        i++;
-    }
-    printf("]\n");
-    
-    // Verificar la estructura circular (opcional)
-    printf("  Verificación circular: primer nodo=%d, último nodo=%d, último->next=primer nodo? %s\n",
-           stack->top->value,
-           stack->top->prev->value,
-           (stack->top->prev->next == stack->top) ? "Sí" : "No");
+	if (info->a)
+	{
+		free_stack(info->a);
+		free(info->a);
+	}
+	if (info->b)
+	{
+		free_stack(info->b);
+		free(info->b);
+	}
 }
 
-// Función para liberar una pila
-void free_stack_completo(t_stack *stack)
+// Generar números aleatorios sin repetir
+void	generate_random_numbers(t_info *info, int count)
 {
-    t_node *curr;
-    t_node *next;
-    int i;
-    
-    if (!stack || !stack->top)
-        return;
-    
-    curr = stack->top;
-    i = 0;
-    while (i < stack->size)
-    {
-        next = curr->next;
-        free(curr);
-        curr = next;
-        i++;
-    }
-    stack->top = NULL;
-    stack->size = 0;
+	int		*nums;
+	int		i;
+	int		j;
+	int		unique;
+	
+	nums = malloc(sizeof(int) * count);
+	if (!nums)
+		return ;
+	
+	// Inicializar semilla
+	srand(time(NULL));
+	
+	// Generar números únicos
+	i = 0;
+	while (i < count)
+	{
+		nums[i] = rand() % 1000; // Números entre 0 y 999
+		unique = 1;
+		j = 0;
+		while (j < i)
+		{
+			if (nums[j] == nums[i])
+			{
+				unique = 0;
+				break ;
+			}
+			j++;
+		}
+		if (unique)
+		{
+			append_node(info, nums[i]);
+			i++;
+		}
+	}
+	free(nums);
 }
 
-// Función para cargar números en la pila desde un array
-void cargar_numeros(t_info *info, int *numeros, int cantidad)
+// Cargar números específicos para pruebas
+void	load_test_numbers(t_info *info, int *nums, int size)
 {
-    for (int i = 0; i < cantidad; i++)
-    {
-        append_node(info, numeros[i]);
-    }
+	for (int i = 0; i < size; i++)
+		append_node(info, nums[i]);
 }
 
-// Función para probar un caso específico
-void probar_caso(t_info *info, int *numeros, int cantidad, char *descripcion)
+// Probar benchmark con diferentes configuraciones
+void	test_benchmark(int strategy, int bench_flag, int *nums, int size, char *desc)
 {
-    printf("\n%s\n", descripcion);
-    printf("========================================\n");
-    
-    // Cargar números
-    cargar_numeros(info, numeros, cantidad);
-    
-    printf("ANTES de ordenar:\n");
-    print_stack_verbose(info->a, "Stack A");
-    print_stack_verbose(info->b, "Stack B");
-    
-    printf("\nPROCESO de ordenación:\n");
-    printf("------------------------\n");
-    
-    // Ordenar
-    bubblesort(info);
-    
-    printf("\nRESULTADO:\n");
-    printf("------------------------\n");
-    print_stack_verbose(info->a, "Stack A");
-    print_stack_verbose(info->b, "Stack B");
-    
-    // Verificar si está ordenado
-    int ordenado = 1;
-    t_node *curr = info->a->top;
-    for (int i = 0; i < info->a->size - 1; i++)
-    {
-        if (curr->value > curr->next->value)
-        {
-            ordenado = 0;
-            break;
-        }
-        curr = curr->next;
-    }
-    
-    printf("\nRESUMEN:\n");
-    printf("- ¿Está ordenado? %s\n", ordenado ? "SÍ" : "NO");
-    printf("- Operaciones realizadas: sa=%d, sb=%d, ss=%d\n", 
-           info->ops[5], info->ops[6], info->ops[7]);
-    printf("- Total operaciones: %d\n", 
-           info->ops[5] + info->ops[6] + info->ops[7]);
-    
-    // Liberar memoria para el siguiente caso
-    free_stack_completo(info->a);
+	t_info	info;
+	
+	printf("\n════════════════════════════════════════════\n");
+	printf("TEST: %s\n", desc);
+	printf("Estrategia: %s | Benchmark: %s\n", 
+		   strategy == SIMPLE ? "SIMPLE" : 
+		   strategy == MEDIUM ? "MEDIUM" : 
+		   strategy == COMPLEX ? "COMPLEX" : "ADAPTIVE",
+		   bench_flag ? "ON" : "OFF");
+	printf("════════════════════════════════════════════\n");
+	
+	init_info(&info);
+	info.strategy = strategy;
+	info.bench = bench_flag;
+	
+	// Cargar números
+	load_test_numbers(&info, nums, size);
+	
+	// Calcular disorder ANTES de ordenar
+	info.disorder = compute_disorder(info.a);
+	printf("Disorder calculado: %.2f%%\n\n", info.disorder * 100);
+	
+	// Ejecutar algoritmo según estrategia
+	printf("--- INICIO DE OPERACIONES (stdout) ---\n");
+	if (strategy == SIMPLE)
+		bubblesort(&info);  // Usamos bubblesort como placeholder
+	else if (strategy == MEDIUM)
+		solve_medium(&info);
+	else if (strategy == COMPLEX)
+		printf("(COMPLEX aún no implementado)\n");
+	else if (strategy == ADAPTIVE)
+		printf("(ADAPTIVE aún no implementado)\n");
+	printf("--- FIN DE OPERACIONES (stdout) ---\n\n");
+	
+	// Mostrar resumen de operaciones
+	printf("--- ESTADO FINAL ---\n");
+	printf("Stack A size: %d\n", info.a->size);
+	printf("Stack B size: %d\n", info.b->size);
+	printf("Total ops: %d\n", total_ops(&info));
+	
+	// Si benchmark está activo, se imprimirá a stderr
+	if (info.bench)
+	{
+		printf("\n--- SALIDA BENCHMARK (stderr) ---\n");
+		print_bench(&info);
+		printf("--- FIN BENCHMARK ---\n");
+	}
+	
+	free_all(&info);
 }
 
-int main()
+// Probar con diferentes tamaños
+void	test_sizes(void)
 {
-    t_info info;
-    t_stack stack_a;
-    t_stack stack_b;
-    
-    printf("========================================\n");
-    printf("     TEST DE BUBBLE SORT\n");
-    printf("     Lista doblemente enlazada circular\n");
-    printf("========================================\n");
-    
-    // CASO 1: Lista aleatoria (tu ejemplo original)
-    init_info(&info, &stack_a, &stack_b);
-    int caso1[] = {3, 1, 2, 7, 34};
-    probar_caso(&info, caso1, 5, "CASO 1: Lista aleatoria [3, 1, 2, 7, 34]");
-    
-    // // CASO 2: Lista ya ordenada
-    // init_info(&info, &stack_a, &stack_b);
-    // int caso2[] = {1, 2, 3, 4, 5, 6};
-    // probar_caso(&info, caso2, 6, "CASO 2: Lista ya ordenada [1, 2, 3, 4, 5, 6]");
-    
-    // CASO 3: Lista inversamente ordenada
-    init_info(&info, &stack_a, &stack_b);
-    int caso3[] = {10, 9, 8, 7, 6, 5, 4};
-    probar_caso(&info, caso3, 7, "CASO 3: Lista inversa [10, 9, 8, 7, 6, 5, 4]");
-    
-    // CASO 4: Lista con números duplicados
-    init_info(&info, &stack_a, &stack_b);
-    int caso4[] = {5, 2, 5, 1, 2, 3};
-    probar_caso(&info, caso4, 6, "CASO 4: Con duplicados [5, 2, 5, 1, 2, 3]");
-    
-    // // CASO 5: Lista pequeña (3 elementos)
-    // init_info(&info, &stack_a, &stack_b);
-    // int caso5[] = {3, 1, 2};
-    // probar_caso(&info, caso5, 3, "CASO 5: Lista pequeña [3, 1, 2]");
-    
-    // // CASO 6: Lista con 2 elementos
-    // init_info(&info, &stack_a, &stack_b);
-    // int caso6[] = {2, 1};
-    // probar_caso(&info, caso6, 2, "CASO 6: Dos elementos [2, 1]");
-    
-    // // CASO 7: Lista con 1 elemento (caso borde)
-    // init_info(&info, &stack_a, &stack_b);
-    // int caso7[] = {42};
-    // probar_caso(&info, caso7, 1, "CASO 7: Un elemento [42]");
-    
-    // CASO 8: Lista más grande para ver rendimiento
-    init_info(&info, &stack_a, &stack_b);
-    int caso8[] = {9, 3, 7, 1, 8, 2, 6, 4, 5, 10, 15, 12, 14, 11, 13};
-    probar_caso(&info, caso8, 15, "CASO 8: Lista mediana [9,3,7,1,8,2,6,4,5,10,15,12,14,11,13]");
-    
-    printf("\n========================================\n");
-    printf("     FIN DE LAS PRUEBAS\n");
-    printf("========================================\n");
-    
-    return 0;
+	int	small[] = {3, 1, 4, 2, 5};
+	int	medium[] = {9, 3, 7, 1, 8, 2, 6, 4, 5, 10};
+	int	large[20];
+	
+	// Generar array grande
+	for (int i = 0; i < 20; i++)
+		large[i] = i + 1;
+	// Desordenar un poco
+	large[0] = 20;
+	large[19] = 1;
+	
+	printf("\n========================================\n");
+	printf("   PRUEBAS DE BENCHMARK - push_swap\n");
+	printf("========================================\n");
+	
+	// Test 1: Simple sin benchmark
+	test_benchmark(SIMPLE, 0, small, 5, "Simple - 5 nums - SIN benchmark");
+	
+	// Test 2: Simple con benchmark
+	test_benchmark(SIMPLE, 1, small, 5, "Simple - 5 nums - CON benchmark");
+	
+	// Test 3: Medium con benchmark
+	test_benchmark(MEDIUM, 1, medium, 10, "Medium - 10 nums - CON benchmark");
+	
+	// Test 4: Adaptive (placeholder) con benchmark
+	test_benchmark(ADAPTIVE, 1, medium, 10, "Adaptive - 10 nums - CON benchmark");
+	
+	// Test 5: Complex (placeholder) con benchmark
+	test_benchmark(COMPLEX, 1, large, 20, "Complex - 20 nums - CON benchmark");
+}
+
+int	main(void)
+{
+	// Ejecutar todas las pruebas
+	test_sizes();
+	
+	// Prueba adicional: redirección de stderr a archivo
+	printf("\n========================================\n");
+	printf("   PRUEBA DE REDIRECCIÓN\n");
+	printf("========================================\n");
+	printf("Ejecuta: ./push_swap_bench 2> bench_output.txt\n");
+	printf("Esto guardará el benchmark en bench_output.txt\n");
+	printf("Mientras las operaciones (stdout) se ven en pantalla\n");
+	
+	return (0);
 }
