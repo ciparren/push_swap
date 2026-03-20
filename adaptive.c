@@ -20,7 +20,7 @@
     if (info->disorder < 0.2f)
     {
         info->strategy = SIMPLE;
-        solve_simple(info);  // O(n) (tendrías que implementar uno lineal)
+        bubblesort(info);  // O(n) (tendrías que implementar uno lineal)
     }
     else if (info->disorder < 0.5f)
     {
@@ -30,6 +30,6 @@
     else
     {
         info->strategy = COMPLEX;
-        solve_complex(info); // O(n log n)
+        solve_medium(info); // O(n log n) Cambiar a complex cuando esté
     }
 }
