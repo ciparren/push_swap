@@ -25,11 +25,11 @@
     else if (info->disorder < 0.5f)
     {
         info->strategy = MEDIUM;
-        solve_medium(info);  // O(n√n)
+        bubblesort(info);  // O(n√n) olve_medium
     }
     else
     {
         info->strategy = COMPLEX;
-        solve_medium(info); // O(n log n) Cambiar a complex cuando esté
+        bubblesort(info); // O(n log n) Cambiar a complex cuando esté
     }
 }

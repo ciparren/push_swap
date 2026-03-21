@@ -21,20 +21,20 @@ void    sa(t_info *info)
 
     if(info->a->size < 2)
         return ;
-    first = info->a->top;
+    first = info->a->top->next;
     second = first->next;
     if(info->a->size > 2)
     {
-        last = first->prev;
+        last = info->a->top->prev;
         third = second->next;
-        last->next = second;
-        second->prev = last;
+        last->next = info->a->top;  // es nuestro top
+        second->prev = info->a->top;
         third->prev = first;
         first->next = third;
         second->next = first;
         first->prev = second;
     }
-    info->a->top = second;
+    info->a->top->next = second;
     info->ops[5]++;
     write(1, "sa\n", 3);
 }
@@ -48,7 +48,7 @@ void    sb(t_info *info)
 
     if(info->b->size < 2)
         return ;
-    first = info->b->top;
+    first = info->b->top->next;
     second = first->next;
     if(info->b->size > 2)
     {
@@ -61,7 +61,7 @@ void    sb(t_info *info)
         second->next = first;
         first->prev = second;
     }   
-    info->b->top = second;
+    info->b->top->next->next = second;
     info->ops[6]++;
     write(1, "sb\n", 3);
 }

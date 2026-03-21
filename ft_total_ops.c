@@ -16,7 +16,7 @@ int total_ops(t_info *info)
     int i;
 
     i = 0;
-    while (info->ops[i] < 11)
+    while (i < 11)
     {
         info->total_ops += info->ops[i];
         i++;

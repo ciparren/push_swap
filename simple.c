@@ -37,7 +37,7 @@ void bubblesort(t_info *info)
         j = 0;
         while (j < info->a->size - 1 - i) // no tenía el - i
         {
-            if (info->a->top->value > info->a->top->next->value)
+            if (info->a->top->next->value > info->a->top->next->next->value)
             {
                 sa(info);
                 swap = 1;

@@ -104,7 +104,7 @@ t_node *pop_node(t_stack *stack);
 void bench_disorder(t_info *info);
 void bench_strategy(t_info *info);
 void bench_ops(t_info *info);   
-int total_ops(t_info *info);
+void bench_total_ops(t_info *info);
 
 // Añadir al final de push_swap.h, antes del #endif
 

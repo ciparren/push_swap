@@ -31,11 +31,11 @@ void chunksort(t_info *info)
         chunk = 1;
     while(info->a->size > 0)
     {
-        if(info->a->top->index < curr_chunk * chunk)
+        if(info->a->top->next->index < curr_chunk * chunk)
             pb(info);
         else
             ra(info);
-        if(info->a->size > 0 && info->a->top->index >= curr_chunk * chunk)
+        if(info->a->size > 0 && info->a->top->next->index >= curr_chunk * chunk)
             curr_chunk++;
     }
 }

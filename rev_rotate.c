@@ -16,7 +16,7 @@ void    rra(t_info *info)
 {
     if(!info->a || info->a->size < 2)
         return ;
-    info->a->top = info->a->top->prev;
+    info->a->top->next = info->a->top->prev;
     info->ops[8]++;
     write(1, "rra\n", 3);
 }
@@ -26,7 +26,7 @@ void    rrb(t_info *info)
 
     if(!info->b || info->b->size < 2)
         return ;
-    info->b->top = info->b->top->prev;
+    info->b->top->next = info->b->top->prev;
     info->ops[9]++;
     write(1, "rrb\n", 3);
 }
@@ -35,10 +35,10 @@ void    rrr(t_info *info)
 {
     if(!info->a || info->a->size < 2)
         return ;
-    info->a->top = info->a->top->prev;
+    info->a->top->next = info->a->top->prev;
     if(!info->b || info->b->size < 2)
         return ;
-    info->b->top = info->b->top->prev;
+    info->b->top->next = info->b->top->prev;
         write(1, "rrr\n", 3);
     info->ops[10]++;
 }

@@ -126,13 +126,14 @@ void free_stack(t_stack *stack)
 
     if(!stack)
         return ;
-    curr = stack->top;
-    while (curr != NULL)
+    curr = stack->top->next;
+    while (curr != stack->top)
     {
         next_node = curr->next;
         free(curr);
         curr = next_node;
     }
+    free(stack->top);
     free(stack);
 }
 
@@ -141,7 +142,7 @@ int check_dup(t_stack *a, int num)
     t_node *curr;
     
     curr = a->top;
-    while(curr != NULL)
+    while(curr != a->top)
     {
         if(curr->value == num)
             return 1;
@@ -159,11 +160,11 @@ void append_node(t_info *info, int num)
     if(!to_append)
         error_exit(info);
     to_append->value = num;
-    if(info->a->top == NULL)
+    if(info->a->top->next == NULL)
     {
-        info->a->top = to_append;
-        to_append->next = to_append;
-        to_append->prev = to_append;
+        info->a->top->next = to_append;
+        to_append->next = info->a->top;
+        to_append->prev = info->a->top;
     }
     else
     {
@@ -188,12 +189,12 @@ void insert_index(t_info *info)
 
     if(!info->a || info->a->size == 0)
         return ;
-    current = info->a->top;
+    current = info->a->top->next;
     i = 0;
     while (i < info->a->size)
     {
         idx = 0;
-        cmp = info->a->top;
+        cmp = info->a->top->next;
         j = 0;
         while (j < info->a->size)
         {

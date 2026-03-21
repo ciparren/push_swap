@@ -213,14 +213,21 @@ int	main(void)
 
 void	init_info(t_info *info)
 {
+	t_node *head_a;
+	t_node *head_b;
 	info->a = malloc(sizeof(t_stack));
 	info->b = malloc(sizeof(t_stack));
 	if (!info->a || !info->b)
 		exit(1);
-
-	info->a->top = NULL;
+	head_a = malloc(sizeof(t_node));
+	head_b = malloc(sizeof(t_node));
+	info->a->top=head_a;
+	info->b->top=head_b;
+	info->a->top->next = info->a->top;
+	info->a->top->prev = info->a->top;
 	info->a->size = 0;
-	info->b->top = NULL;
+	info->b->top->next = info->b->top;
+	info->b->top->prev = info->b->top;
 	info->b->size = 0;
 
 	for (int i = 0; i < 11; i++)
@@ -228,7 +235,7 @@ void	init_info(t_info *info)
 
 	info->total_ops = 0;
 	info->bench = 1;          // 🔥 ACTIVO para usar tu script
-	info->strategy = 0;       // 0 = ADAPTATIVE
+	info->strategy = ADAPTIVE;       // 0 = ADAPTATIVE
 	info->disorder = 0.0f;
 }
 
@@ -239,12 +246,12 @@ void	free_all(t_info *info)
 	if (info->a)
 	{
 		free_stack(info->a);
-		free(info->a);
+		//free(info->a);
 	}
 	if (info->b)
 	{
 		free_stack(info->b);
-		free(info->b);
+		//free(info->b);
 	}
 }
 
@@ -252,32 +259,32 @@ void	free_all(t_info *info)
 
 int	main(int argc, char **argv)
 {
-	t_info	info;
+	t_info	*info;
 
 	if (argc < 2)
 		return (0);
-
-	init_info(&info);
+	info= malloc(sizeof(t_info));
+	init_info(info);
 
 	// Parsear argumentos → stack A
-	parse_args(argc, argv, &info);
+	parse_args(argc, argv, info);
 	// Calcular disorder antes de ordenar
-	info.disorder = compute_disorder(info.a);
+	info->disorder = compute_disorder(info->a);
 
 	// Ejecutar estrategia
-	if (info.strategy == 0)
-		solve_adaptive(&info);
-	else if (info.strategy == 1)
-		bubblesort(&info);
-	else if (info.strategy == 2)
-		solve_medium(&info);
-	else if (info.strategy == 3)
-		printf("Complex not implemented\n");
+	if (info->strategy == 0)
+		solve_adaptive(info);
+	else if (info->strategy == 1)
+		bubblesort(info);
+	else if (info->strategy == 2)
+		bubblesort(info);
+	else if (info->strategy == 3)
+		bubblesort(info);
 
 	// 🔥 IMPORTANTE: benchmark a stderr
-	if (info.bench)
-		print_bench(&info);
+	if (info->bench)
+		print_bench(info);
 
-	free_all(&info);
+	free_all(info);
 	return (0);
 }

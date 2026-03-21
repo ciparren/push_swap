@@ -17,7 +17,7 @@ void print_bench(t_info *info)
 {
     bench_disorder(info);
     bench_strategy(info);
-    total_ops(info);
+    bench_total_ops(info);
     bench_ops(info);
 }
 
