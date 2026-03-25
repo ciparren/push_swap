@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:17:47 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/13 11:37:06 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/25 17:59:26 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,34 @@ return mistakes / total_pairs
 */
 #include "push_swap.h"
 
+float	compute_disorder(t_stack *a)
+{
+	t_node	*i;
+	t_node	*j;
+	long	mistakes;
+	long	total_pairs;
+
+	if (a->size < 2)
+		return (0.0);
+	mistakes = 0;
+	total_pairs = 0;
+	i = a->top->next; 
+	while (i != a->top)
+	{
+		j = i->next;
+		while (j != a->top)
+		{
+			total_pairs++;
+			if (i->value > j->value)
+				mistakes++;
+			j = j->next;
+		}
+		i = i->next;
+	}
+	return ((float)mistakes / total_pairs);
+}
+
+/*
 float compute_disorder(t_stack *a)
 {
     t_node  *i;
@@ -51,3 +79,4 @@ float compute_disorder(t_stack *a)
         return  (0.0);
     return (mistakes / total_pairs);
 }
+*/

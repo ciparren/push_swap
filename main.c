@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 12:00:00 by ciparren          #+#    #+#             */
-/*   Updated: 2026/03/18 10:19:30 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:01:33 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,18 +243,20 @@ void	init_info(t_info *info)
 
 void	free_all(t_info *info)
 {
+	if (!info)
+		return ;
 	if (info->a)
 	{
-		free_stack(info->a);
-		//free(info->a);
+		free_stack(info->a); // Libera nodos y el fantasma
+		free(info->a);       // Libera la estructura t_stack
 	}
 	if (info->b)
 	{
 		free_stack(info->b);
-		//free(info->b);
+		free(info->b);
 	}
+	free(info); // Si info también fue un malloc en el main
 }
-
 // ================= MAIN =================
 
 int	main(int argc, char **argv)

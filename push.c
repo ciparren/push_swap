@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:15:36 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/18 09:29:39 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:01:05 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,46 +38,31 @@ void    pa(t_info *info)
 	write(1, "pa\n", 3);
 }
 
-t_node *pop_node(t_stack *stack)
+t_node	*pop_node(t_stack *stack)
 {
-    t_node *to_pop;
+	t_node	*to_pop;
 
-    if(!stack->top)
-        return (NULL);
-    to_pop = stack->top;
-    if(stack->size == 1)
-        stack->top = NULL;
-    else
-    {
-        to_pop->prev->next = to_pop->next;
-        to_pop->next->prev = to_pop->prev;
-    }
-    stack->size--;
-    // por si acaso, aislamos el nodo
-    to_pop->next = NULL;
-    to_pop->prev = NULL;
-    return (to_pop);
+	if (stack->size == 0)
+		return (NULL);
+	to_pop = stack->top->next;
+	stack->top->next = to_pop->next;
+	to_pop->next->prev = stack->top;
+	stack->size--;
+	to_pop->next = NULL;
+	to_pop->prev = NULL;
+	return (to_pop);
 }
 
-void push_node(t_stack *stack, t_node *new_node)
+void	push_node(t_stack *stack, t_node *new_node)
 {
-    t_node *last;
+	t_node	*old_first;
 
-    if(!new_node)
-        return ;
-    if(stack->size == 0)
-    {
-        new_node->next = new_node;
-        new_node->prev = new_node;
-    }
-    else
-    {
-        last = stack->top->prev;
-        new_node->next = stack->top;
-        new_node->prev = last;
-        last->next = new_node;
-        stack->top->prev = new_node;
-    }
-    stack->top = new_node;
-    stack->size++;
+	if (!new_node)
+		return ;
+	old_first = stack->top->next;
+	new_node->next = old_first;
+	new_node->prev = stack->top;
+	stack->top->next = new_node;
+	old_first->prev = new_node;
+	stack->size++;
 }
