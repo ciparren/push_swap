@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 17:44:33 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/18 10:22:07 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:32:59 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,28 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putfloat_fd(float num, int fd, int precision);
-
+char    **ft_split(char const *s, char c);
 
 
 void chunksort(t_info *info);
 
+
+// GESTIÓN DE MEMORIA Y LIMPIEZA
+void    free_matrix(char **matrix);
+void    free_all(t_info *info);
+void    error_split(t_info *info, char **args);
+
+// LÓGICA DE ALGORITMOS
+void    insert_index(t_info *info);
+void    back_to_a(t_info *info);
+int     get_max_pos(t_stack *b);
+
+// OPERACIONES SILENCIOSAS (LÓGICA PURA)
+void    rotate_stack(t_stack *stack);
+void    reverse_rotate_stack(t_stack *stack);
+
+// LIBFT / UTILS ADICIONALES
+void    *ft_memset(void *s, int c, size_t n);
 
 
 #endif

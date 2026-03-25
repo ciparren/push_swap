@@ -1,59 +1,33 @@
-# Makefile para pruebas de benchmark
-NAME = push_swap_bench
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+NAME        = push_swap
+CC          = gcc
+CFLAGS      = -Wall -Wextra -Werror
+LIBFT_DIR   = ft_libc
+LIBFT       = $(LIBFT_DIR)/libft.a
 
-# Ruta de la libft (ajusta si es necesario)
-LIBFT_DIR = ft_libc
-LIBFT = $(LIBFT_DIR)/libft.a
+SRCS        = main.c parser.c push.c swap.c rotate.c rev_rotate.c \
+              simple.c medium.c adaptive.c complex.c disorder.c \
+              ft_total_ops.c utils.c benchmark.c
+OBJS        = $(SRCS:.c=.o)
 
-SRCS = main.c \
-       parser.c \
-       push.c \
-       swap.c \
-       rotate.c \
-       rev_rotate.c \
-       simple.c \
-       medium.c \
-       adaptive.c \
-       complex.c \
-       disorder.c \
-       ft_total_ops.c \
-       utils.c \
-       benchmark.c \
+all: $(LIBFT) $(NAME)
 
-OBJS = $(SRCS:.c=.o)
-
-all: $(NAME)
-
-# Compilar la libft antes
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
 
 %.o: %.c push_swap.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -I. -I$(LIBFT_DIR) -c $< -o $@
 
 clean:
+	@make -C $(LIBFT_DIR) clean
 	rm -f $(OBJS)
-	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
+	@make -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-test: $(NAME)
-	@echo "\n=== EJECUTANDO PRUEBAS ===\n"
-	@./$(NAME)
-
-test-redirect: $(NAME)
-	@echo "\n=== PRUEBA CON REDIRECCIÓN ===\n"
-	@./$(NAME) 2> bench_output.txt
-	@echo "Benchmark guardado en bench_output.txt"
-	@cat bench_output.txt
-
-.PHONY: all clean fclean re test test-redirect
+.PHONY: all clean fclean re

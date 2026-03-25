@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:17:47 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/18 10:14:59 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:29:03 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,45 +15,46 @@
 
 void solve_medium(t_info *info)
 {
-    chunksort(info);
+    chunksort(info); 
+    back_to_a(info); 
 }
 
 void chunksort(t_info *info)
 {
-    int chunk; // redondeaos abajo, más sencillo, ara calcular los trozos que vamos a usar
-    int curr_chunk;
-    // ahora hay que ir cogiendo esos chunks hasta llegar a size completo de a e ir pasando a la pila B.
-    
-    if(!info->a || info->a->size < 2)
-        return ;
-    chunk =  ft_sqrt(info->a->size);
-    if(chunk == 0)
-        chunk = 1;
-    while(info->a->size > 0)
+    int i;
+    int range;
+
+    i = 0;
+    range = ft_sqrt(info->a->size) * 1.5; 
+    while (info->a->size > 0)
     {
-        if(info->a->top->next->index < curr_chunk * chunk)
+        if (info->a->top->next->index <= i)
+        {
             pb(info);
+            rb(info); 
+            i++;
+        }
+        else if (info->a->top->next->index <= i + range)
+        {
+            pb(info);
+            i++;
+        }
         else
             ra(info);
-        if(info->a->size > 0 && info->a->top->next->index >= curr_chunk * chunk)
-            curr_chunk++;
     }
 }
-
-// Función para calcular la raíz cuadrada entera
 long long  ft_sqrt(long long n) {
 
     long long inicio;
     long long fin; 
     long long ans;
 
-    if (n < 0) return -1; 
-    if (n == 0 || n == 1) return n;
-
-    
+    if (n < 0) 
+        return -1; 
+    if (n == 0 || n == 1) 
+        return n;
     inicio = 1;
     fin = n;
-    
     while (inicio <= fin) {
         long long mid = (inicio + fin) / 2;
 
@@ -70,58 +71,49 @@ long long  ft_sqrt(long long n) {
     }
     return ans;
 }
-/*
-static int find_max(t_stack *b)
+
+int	get_max_pos(t_stack *b)
 {
-    t_node *curr;
-    int max_value;
-    int max_pos;
-    int i;
+	t_node	*curr;
+	int		max_idx;
+	int		pos;
+	int		i;
 
-    if(!b || b->size == 0)
-        return (-1);
-    curr = b->top;
-    max_value = curr->index;
-    max_pos = 0;
-    i = 0;
-
-    while(i < b->size)
-    {
-        if(curr->index > max_value)
-        {
-            max_value = curr->index;
-            max_pos = i;
-        }
-        curr = curr->next;
-        i++;
-    }
-    return (max_pos);
+	curr = b->top->next;
+	max_idx = curr->index;
+	pos = 0;
+	i = 0;
+	while (i < b->size)
+	{
+		if (curr->index > max_idx)
+		{
+			max_idx = curr->index;
+			pos = i;
+		}
+		curr = curr->next;
+		i++;
+	}
+	return (pos);
 }
 
-static void rot_max(t_info *info, int max_pos)
+void	back_to_a(t_info *info)
 {
-    int size;
-    int i;
+	int	max_pos;
 
-    size = info->b->size;
-
-    if(max_pos <= size / 2)
-    {
-        i = 0;
-        while(i < max_pos)
-        {
-            rb(info);
-            i++;
-        }
-    }
-    else
-    {
-        i = 0;
-        while(i < size - max_pos)
-        {
-            rrb(info);
-            i++;
-        }
-    }
+	while (info->b->size > 0)
+	{
+		max_pos = get_max_pos(info->b);
+		if (max_pos <= info->b->size / 2)
+		{
+			while (max_pos-- > 0)
+				rb(info);
+		}
+		else
+		{
+			max_pos = info->b->size - max_pos;
+			while (max_pos-- > 0)
+				rrb(info);
+		}
+		pa(info);
+	}
 }
-    */

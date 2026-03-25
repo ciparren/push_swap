@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:14:06 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/25 17:47:25 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:32:27 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,24 +117,10 @@ void error_exit(t_info *info)
             free_stack(info->a);
         if(info->b)
             free_stack(info->b);
-        free(info);
+        //free(info);
     }
     exit(1);
 }
-
-void	error_exit(t_info *info)
-{
-	write(2, "Error\n", 6);
-	if (info)
-	{
-		if (info->a)
-			free_stack(info->a);
-		if (info->b)
-			free_stack(info->b);
-	}
-	exit(1);
-}
-
 void free_stack(t_stack *stack)
 {
     t_node *curr;

@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 17:03:26 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/25 17:41:40 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:37:15 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,21 @@ void	bubblesort(t_info *info)
 
 	if (!info->a || info->a->size < 2)
 		return ;
-	i = 0;
-	while (i < info->a->size)
+	swapped = 1;
+	while (swapped) // Aquí es donde usamos la variable
 	{
 		swapped = 0;
-		if (info->a->top->next->index > info->a->top->next->next->index)
+		i = 0;
+		while (i < info->a->size)
 		{
-			sa(info);
-			swapped = 1;
+			if (info->a->top->next->index > info->a->top->next->next->index)
+			{
+				sa(info);
+				swapped = 1;
+			}
+			ra(info);
+			i++;
 		}
-		ra(info);
-		i++;
 	}
 	while (info->a->top->next->index != 0)
 		ra(info);
