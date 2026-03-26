@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:14:06 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/25 18:32:27 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:01:45 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,32 +174,21 @@ int check_dup(t_stack *a, int num)
     return 0;
 }
 
-void append_node(t_info *info, int num)
+void	append_node(t_info *info, int num)
 {
-    t_node *to_append;
-    t_node *last;
-   
-    to_append = malloc(sizeof(t_node));
-    if(!to_append)
-        error_exit(info);
-    to_append->value = num;
-    if(info->a->top->next == NULL)
-    {
-        info->a->top->next = to_append;
-        to_append->next = info->a->top;
-        to_append->prev = info->a->top;
-    }
-    else
-    {
-        last = info->a->top->prev;
+	t_node	*to_append;
+	t_node	*last;
 
-        to_append->next = info->a->top;
-        to_append->prev = last;
-
-        last->next = to_append;
-        info->a->top->prev = to_append;
-    }
-    info->a->size++;
+	to_append = malloc(sizeof(t_node));
+	if (!to_append)
+		error_exit(info);
+	to_append->value = num;
+	last = info->a->top->prev;
+	to_append->next = info->a->top;
+	to_append->prev = last;
+	last->next = to_append;
+	info->a->top->prev = to_append;
+	info->a->size++;
 }
 
 void	insert_index(t_info *info)

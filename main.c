@@ -28,28 +28,35 @@ static void	execute_strategy(t_info *info)
 		bubblesort(info);
 	else if (info->strategy == MEDIUM)
 		solve_medium(info);
-	else if (info->strategy == COMPLEX)
-		solve_complex(info); // Aquí irá tu Radix
-	else if (info->strategy == ADAPTIVE)
-		solve_adaptive(info);
+	else	return ;
 }
 
 int	main(int argc, char **argv)
 {
-	t_info	info;
+	t_info	*info;
 
+	info = malloc(sizeof(t_info));
 	if (argc < 2)
 		return (0);
-	init_stacks(&info);
-	parse_args(argc, argv, &info);
-	if (info.a->size > 0)
+	init_stacks(info);
+
+	parse_args(argc, argv, info);
+    info->disorder = compute_disorder(info->a);
+	if (info->a->size > 0)
 	{
-		insert_index(&info);
-		info.disorder = compute_disorder(info.a);
-		execute_strategy(&info);
-		if (info.bench)
-			print_bench(&info);
+		
+		if (info->disorder > 0)
+		{
+			insert_index(info);
+			execute_strategy(info);
+		}
+		if (info->bench)
+		{
+			//info->disorder = 0.33;
+			//info->disorder = compute_disorder(info->a); // Disorder final
+			print_bench(info);
+		}
 	}
-	free_all(&info);
+	free_all(info);
 	return (0);
 }

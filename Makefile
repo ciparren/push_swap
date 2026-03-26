@@ -1,11 +1,11 @@
 NAME        = push_swap
 CC          = gcc
-CFLAGS      = -Wall -Wextra -Werror
+CFLAGS      = -Wall -Wextra -Werror -g
 LIBFT_DIR   = ft_libc
 LIBFT       = $(LIBFT_DIR)/libft.a
 
 SRCS        = main.c parser.c push.c swap.c rotate.c rev_rotate.c \
-              simple.c medium.c adaptive.c complex.c disorder.c \
+              simple.c medium.c adaptive.c disorder.c error_manager.c \
               ft_total_ops.c utils.c benchmark.c
 OBJS        = $(SRCS:.c=.o)
 

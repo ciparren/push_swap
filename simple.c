@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 17:03:26 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/25 18:37:15 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:04:52 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void solve_simple(t_info *info)
 */
 
 // TODO hacer un algoritmo que resuelva cuando tiene solo 2, 3 y 5 números la pila
-
 void	bubblesort(t_info *info)
 {
 	int	i;
@@ -29,11 +28,12 @@ void	bubblesort(t_info *info)
 	if (!info->a || info->a->size < 2)
 		return ;
 	swapped = 1;
-	while (swapped) // Aquí es donde usamos la variable
+	while (swapped)
 	{
 		swapped = 0;
 		i = 0;
-		while (i < info->a->size)
+		// Solo iteramos hasta size - 1 para no comparar el último con el fantasma
+		while (i < info->a->size - 1)
 		{
 			if (info->a->top->next->index > info->a->top->next->next->index)
 			{
@@ -43,7 +43,10 @@ void	bubblesort(t_info *info)
 			ra(info);
 			i++;
 		}
+		// Hacemos una rotación extra para devolver la pila a su sitio y cerrar el ciclo
+		ra(info);
 	}
+	// Asegurar que el 0 quede arriba
 	while (info->a->top->next->index != 0)
 		ra(info);
 }

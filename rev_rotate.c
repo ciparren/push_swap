@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 17:00:13 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/25 18:00:37 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/26 11:16:56 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ void	rra(t_info *info)
 	reverse_rotate_stack(info->a);
 	write(1, "rra\n", 4);
 	info->ops[8]++;
+}
+
+void	rrb(t_info *info)
+{
+	reverse_rotate_stack(info->b);
+	write(1, "rrb\n", 4);
+	info->ops[9]++;
 }
 
 void	rrr(t_info *info)

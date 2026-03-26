@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:17:47 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/25 17:59:26 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:21:42 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ float	compute_disorder(t_stack *a)
 		}
 		i = i->next;
 	}
-	return ((float)mistakes / total_pairs);
+	return ((float)mistakes / (float)total_pairs);
 }
 
 /*

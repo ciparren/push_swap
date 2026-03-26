@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:17:47 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/25 18:29:03 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/26 11:22:53 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,24 @@ void chunksort(t_info *info)
     int range;
 
     i = 0;
+    // El rango debe escalar con el tamaño de la pila
     range = ft_sqrt(info->a->size) * 1.5; 
     while (info->a->size > 0)
     {
-        if (info->a->top->next->index <= i)
+        // Si el número entra en la "ventana" actual
+        if (info->a->top->next->index <= i + range)
         {
             pb(info);
-            rb(info); 
-            i++;
-        }
-        else if (info->a->top->next->index <= i + range)
-        {
-            pb(info);
+            // Si es de los muy pequeños, lo mandamos al fondo de B
+            if (info->b->size > 1 && info->b->top->next->index <= i)
+                rb(info);
             i++;
         }
         else
             ra(info);
     }
 }
+
 long long  ft_sqrt(long long n) {
 
     long long inicio;

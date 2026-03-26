@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:17:47 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/13 11:37:28 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:25:49 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
  void solve_adaptive(t_info *info)
 {
     // Calculas disorder y eliges estrategia
-    info->disorder = compute_disorder(info->a);
     
     if (info->disorder < 0.2f)
     {
