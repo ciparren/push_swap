@@ -6,7 +6,7 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:17:47 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/26 17:25:49 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/30 10:22:03 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
     else if (info->disorder < 0.5f)
     {
         info->strategy = MEDIUM;
-        bubblesort(info);  // O(n√n) olve_medium
+        chunksort(info);  // O(n√n) olve_medium
     }
     else
     {
         info->strategy = COMPLEX;
-        bubblesort(info); // O(n log n) Cambiar a complex cuando esté
+        raddix(info); // O(n log n) Cambiar a complex cuando esté
     }
 }

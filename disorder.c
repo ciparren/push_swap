@@ -10,16 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* 
-Function compute_disorder(stack a):
-    mistakes = 0
-    total_pairs = 0
-    for i from 0 to size(a)-1:
-    for j from i+1 to size(a)-1:
-    total_pairs += 1
-    if a[i] > a[j]:
-    mistakes += 1
-return mistakes / total_pairs 
+/*
+Function	compute_disorder(stack a):
+	mistakes = 0
+	total_pairs = 0
+	for i from 0 to size(a)-1:
+	for j from i+1 to size(a)-1:
+	total_pairs += 1
+	if a[i] > a[j]:
+	mistakes += 1
+return mistakes / total_pairs
 */
 #include "push_swap.h"
 
@@ -34,7 +34,7 @@ float	compute_disorder(t_stack *a)
 		return (0.0);
 	mistakes = 0;
 	total_pairs = 0;
-	i = a->top->next; 
+	i = a->top->next;
 	while (i != a->top)
 	{
 		j = i->next;
@@ -51,32 +51,32 @@ float	compute_disorder(t_stack *a)
 }
 
 /*
-float compute_disorder(t_stack *a)
+float	compute_disorder(t_stack *a)
 {
-    t_node  *i;
-    t_node  *j;
-    long    mistakes;   // Contador de errores
-    long    total_pairs;// Total de combinaciones
+	t_node	*i;
+	t_node	*j;
 
-    if(a->size < 2)
-        return (0.0);
-    mistakes = 0;
-    total_pairs = 0;
-    i = a->top; 
-    while(i->next != a->top)
-    {
-        j = i->next;
-        while(j != a->top)
-        {
-            total_pairs++;
-            if(i->value > j->value)
-                mistakes++;
-            j = j->next;
-        }
-        i = i->next;
-    }
-    if(total_pairs == 0)
-        return  (0.0);
-    return (mistakes / total_pairs);
+	long    mistakes;   // Contador de errores
+	long    total_pairs;// Total de combinaciones
+	if(a->size < 2)
+		return (0.0);
+	mistakes = 0;
+	total_pairs = 0;
+	i = a->top;
+	while(i->next != a->top)
+	{
+		j = i->next;
+		while(j != a->top)
+		{
+			total_pairs++;
+			if(i->value > j->value)
+				mistakes++;
+			j = j->next;
+		}
+		i = i->next;
+	}
+	if(total_pairs == 0)
+		return ((0.0));
+	return (mistakes / total_pairs);
 }
 */

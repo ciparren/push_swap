@@ -28,34 +28,44 @@ static void	execute_strategy(t_info *info)
 		bubblesort(info);
 	else if (info->strategy == MEDIUM)
 		solve_medium(info);
-	else	return ;
+	else if (info->strategy == COMPLEX)
+		raddix(info);
+	else if (info->strategy == ADAPTIVE)
+		solve_adaptive(info);
 }
 
 int	main(int argc, char **argv)
 {
 	t_info	*info;
 
-	info = malloc(sizeof(t_info));
 	if (argc < 2)
 		return (0);
+	info = malloc(sizeof(t_info));
+	if (!info)
+		return (1);
 	init_stacks(info);
-
+	
+	// 1. LLENAR LA PILA (¡Vital!)
 	parse_args(argc, argv, info);
-    info->disorder = compute_disorder(info->a);
+
 	if (info->a->size > 0)
 	{
+		insert_index(info); // Prepara los índices para Radix
 		
+		// Debug inicial
+		printf("\nESTADO INICIAL:\n");
+		display_stack(info->a, "A");
+
+		info->disorder = compute_disorder(info->a);
 		if (info->disorder > 0)
-		{
-			insert_index(info);
 			execute_strategy(info);
-		}
+
+		// Debug final
+		printf("\nESTADO FINAL:\n");
+		display_stack(info->a, "A");
+
 		if (info->bench)
-		{
-			//info->disorder = 0.33;
-			//info->disorder = compute_disorder(info->a); // Disorder final
 			print_bench(info);
-		}
 	}
 	free_all(info);
 	return (0);

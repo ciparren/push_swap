@@ -6,19 +6,16 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:14:06 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/26 17:01:45 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/30 10:09:47 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
- // TODO parsear si viene una parte de la pila entre comillas, ejemplo: "2 13 4 56 1" 4 3 2
- //TODO PARSEAR SI LA PILA B ESTÁ VACÍA.
 // TODO
 // En parser.c, falta:
-// 1. Manejar argumentos entre comillas: "1 2 3 4"
 // 2. Verificar que info->a y info->b están inicializados antes de usarlos
-// 3. En error_exit, estás llamando a free_stack con punteros no inicializados 
+// 3. En error_exit, estás llamando a free_stack con punteros no inicializados
 
 void	parse_args(int argc, char **argv, t_info *info)
 {
@@ -49,94 +46,86 @@ void	parse_args(int argc, char **argv, t_info *info)
 	}
 }
 
-int is_flag(char *arg, t_info *info)
+int	is_flag(char *arg, t_info *info)
 {
-    // Aquí usarás tu ft_strncmp o similar.
-    // Si es "--bench", info->flag_bench = 1; return 1;
-    // Si es "--simple", info->strategy = SIMPLE; return 1;
-    // Si no es ninguna flag, return 0;
-    if(ft_strncmp(arg, "--bench", 8) == 0)
-        info->bench = 1;
-    else if(ft_strncmp(arg, "--adaptive", 11) == 0)
-        info->strategy = ADAPTIVE;
-    else if(ft_strncmp(arg, "--simple", 9) == 0)
-        info->strategy = SIMPLE;
-    else if(ft_strncmp(arg, "--medium", 9) == 0)
-        info->strategy = MEDIUM;
-    else if(ft_strncmp(arg, "--complex", 10) == 0)
-            info->strategy = COMPLEX;
-    else    
-        return 0;
-    return 1;
+	// Aquí usarás tu ft_strncmp o similar.
+	// Si es "--bench", info->flag_bench = 1; return (1);
+	// Si es "--simple", info->strategy = SIMPLE; return (1);
+	// Si no es ninguna flag, return (0);
+	if (ft_strncmp(arg, "--bench", 8) == 0)
+		info->bench = 1;
+	else if (ft_strncmp(arg, "--adaptive", 11) == 0)
+		info->strategy = ADAPTIVE;
+	else if (ft_strncmp(arg, "--simple", 9) == 0)
+		info->strategy = SIMPLE;
+	else if (ft_strncmp(arg, "--medium", 9) == 0)
+		info->strategy = MEDIUM;
+	else if (ft_strncmp(arg, "--complex", 10) == 0)
+		info->strategy = COMPLEX;
+	else
+		return (0);
+	return (1);
 }
 
-
-int is_valid_number(char *arg)
+int	is_valid_number(char *arg)
 {
-    // Bucle para ver si str[i] es '-' o '+' solo en i == 0
-    // Y que el resto sean dígitos ('0' a '9')
-    // Si hay letras o está vacío, return 0;
-    // Si todo va bien, return 1;
-    int i;
+	int	i;
 
-    i = 0;
-    if(arg[i] == '-' || arg[i] == '+')
-        i++;
-    if(arg[i] == '\0')
-        return (0);
-    while ((arg[i]))
-    {
-        if(!ft_isdigit(arg[i]))
-            return (0);
-        i++;
-    }
-    return (1);
+	// Bucle para ver si str[i] es '-' o '+' solo en i == 0
+	// Y que el resto sean dígitos ('0' a '9')
+	// Si hay letras o está vacío, return (0);
+	// Si todo va bien, return (1);
+	i = 0;
+	if (arg[i] == '-' || arg[i] == '+')
+		i++;
+	if (arg[i] == '\0')
+		return (0);
+	while ((arg[i]))
+	{
+		if (!ft_isdigit(arg[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-void process_number(char *str, t_info *info)
+void	process_number(char *str, t_info *info)
 {
-    // convertir en int
-    // añadir a la pila A
-    long    num;
+	long	num;
 
-    num = ft_atol(str);
-    if (num > 2147483647 || num < -2147483648)
-        error_exit(info);
-    // vamos a ver si hay duplicados.
-    if(check_dup(info->a, (int)num))
-        error_exit(info);
-    append_node(info, (int) num);
+	// convertir en int
+	// añadir a la pila A
+	num = ft_atol(str);
+	if (num > 2147483647 || num < -2147483648)
+		error_exit(info);
+	// vamos a ver si hay duplicados.
+	if (check_dup(info->a, (int)num))
+		error_exit(info);
+	append_node(info, (int)num);
 }
 
-void error_exit(t_info *info)
+void	error_exit(t_info *info)
 {
-    write(2, "Error\n", 6);
-    if(info)
-    {
-        if(info->a)
-            free_stack(info->a);
-        if(info->b)
-            free_stack(info->b);
-        //free(info);
-    }
-    exit(1);
+	write(2, "Error\n", 6);
+	free_all(info);
+	exit(1);
 }
-void free_stack(t_stack *stack)
+void	free_stack(t_stack *stack)
 {
-    t_node *curr;
-    t_node *next_node;
+	t_node	*curr;
+	t_node	*next_node;
 
-    if(!stack)
-        return ;
-    curr = stack->top->next;
-    while (curr != stack->top)
-    {
-        next_node = curr->next;
-        free(curr);
-        curr = next_node;
-    }
-    free(stack->top);
-    free(stack);
+	if (!stack)
+		return ;
+	curr = stack->top->next;
+	while (curr != stack->top)
+	{
+		next_node = curr->next;
+		free(curr);
+		curr = next_node;
+	}
+	free(stack->top);
+	free(stack);
 }
 
 void	free_matrix(char **matrix)
@@ -160,18 +149,18 @@ void	error_split(t_info *info, char **args)
 	error_exit(info);
 }
 
-int check_dup(t_stack *a, int num)
+int	check_dup(t_stack *a, int num)
 {
-    t_node *curr;
-    
-    curr = a->top->next;
-    while(curr != a->top)
-    {
-        if(curr->value == num)
-            return (1);
-        curr = curr->next;
-    }
-    return 0;
+	t_node	*curr;
+
+	curr = a->top->next;
+	while (curr != a->top)
+	{
+		if (curr->value == num)
+			return (1);
+		curr = curr->next;
+	}
+	return (0);
 }
 
 void	append_node(t_info *info, int num)
@@ -193,9 +182,9 @@ void	append_node(t_info *info, int num)
 
 void	insert_index(t_info *info)
 {
-	t_node	*current;
-	t_node	*cmp;
-	int		idx;
+	t_node *current;
+	t_node *cmp;
+	int idx;
 
 	if (!info->a || info->a->size == 0)
 		return ;
