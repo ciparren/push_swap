@@ -5,7 +5,7 @@ LIBFT_DIR   = ft_libc
 LIBFT       = $(LIBFT_DIR)/libft.a
 
 # Todos los archivos .c que hemos revisado
-SRCS        = main.c parser.c push.c swap.c rotate.c rev_rotate.c \
+SRCS        = parser.c push_swap.c push.c swap.c rotate.c rev_rotate.c \
               simple.c medium.c complex.c adaptive.c disorder.c \
               error_manager.c ft_total_ops.c utils.c benchmark.c
 

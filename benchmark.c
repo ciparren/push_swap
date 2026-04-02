@@ -29,7 +29,7 @@ void bench_disorder(t_info *info)
 }
 void bench_strategy(t_info *info)
 {
-    if (info->strategy == 0)
+    if (info->strategy == ADAPTIVE)
     {
         ft_putstr_fd("[bench] strategy: Adaptative / ", 2);
         if (info->disorder < 0.2f)
@@ -37,17 +37,17 @@ void bench_strategy(t_info *info)
         else if (info->disorder < 0.5f)
             ft_putstr_fd("O(n√n)\n", 2);
         else
-            ft_putstr_fd("O(n√n)\n", 2);
+            ft_putstr_fd("O(n log n)\n", 2);
     }
-    else if (info->strategy == 1)
+    else if (info->strategy == SIMPLE)
     {
         ft_putstr_fd("[bench] strategy: Simple / O(n²)\n", 2);
     }
-    else if (info->strategy == 2)
+    else if (info->strategy == MEDIUM)
     {
         ft_putstr_fd("[bench] strategy: Medium / O(n√n)\n", 2);
     }
-    else if (info->strategy == 3)
+    else if (info->strategy == COMPLEX)
     {
         ft_putstr_fd("[bench] strategy: Complex / O(n log n)\n", 2);
     }

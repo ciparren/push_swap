@@ -18,17 +18,17 @@
     
     if (info->disorder < 0.2f)
     {
-        info->strategy = SIMPLE;
+        //info->strategy = SIMPLE;
         bubblesort(info);  // O(n) (tendrías que implementar uno lineal)
     }
     else if (info->disorder < 0.5f)
     {
-        info->strategy = MEDIUM;
-        chunksort(info);  // O(n√n) olve_medium
+        //info->strategy = MEDIUM;
+        solve_medium(info);  // O(n√n) olve_medium
     }
     else
     {
-        info->strategy = COMPLEX;
+        //info->strategy = COMPLEX;
         raddix(info); // O(n log n) Cambiar a complex cuando esté
     }
 }

@@ -21,7 +21,7 @@ void	solve_simple(t_info *info)
 */
 
 // TODO hacer un algoritmo que resuelva cuando tiene solo 2,
-	3 y 5 números la pila
+	//3 y 5 números la pila
 
 void	bubblesort(t_info *info)
 {
@@ -36,7 +36,7 @@ void	bubblesort(t_info *info)
 		swapped = 0;
 		i = 0;
 		// Solo iteramos hasta size
-			- 1 para no comparar el último con el fantasma
+		//- 1 para no comparar el último con el fantasma
 		while (i < info->a->size - 1)
 		{
 			if (info->a->top->next->index > info->a->top->next->next->index)

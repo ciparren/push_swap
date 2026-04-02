@@ -12,7 +12,73 @@
 
 #include "push_swap.h"
 
-// los argumentos que recibo son:
-    // una pila a formateada como una lista de enteros
-    // un parámetro opcional de selector de algoritmo(simple, medium, complex, adaptative)
+static void	init_stacks(t_info *info)
+{
+	info->a = malloc(sizeof(t_stack));
+	info->b = malloc(sizeof(t_stack));
+	if (!info->a || !info->b)
+		exit(1);
+	info->a->top = malloc(sizeof(t_node));
+	info->b->top = malloc(sizeof(t_node));
+	if (!info->a->top || !info->b->top)
+		exit(1);
+	info->a->top->next = info->a->top;
+	info->a->top->prev = info->a->top;
+	info->a->size = 0;
+	info->b->top->next = info->b->top;
+	info->b->top->prev = info->b->top;
+	info->b->size = 0;
+	ft_memset(info->ops, 0, sizeof(info->ops));
+	info->total_ops = 0;
+	info->bench = 0;
+	info->strategy = ADAPTIVE;
+}
 
+static void	execute_strategy(t_info *info)
+{
+	if (info->strategy == SIMPLE)
+		bubblesort(info);
+	else if (info->strategy == MEDIUM)
+		solve_medium(info);
+	else if (info->strategy == COMPLEX)
+		raddix(info);
+	else if (info->strategy == ADAPTIVE)
+		solve_adaptive(info);
+}
+
+int	main(int argc, char **argv)
+{
+	t_info	*info;
+
+	if (argc < 2)
+		return (0);
+	info = malloc(sizeof(t_info));
+	if (!info)
+		return (1);
+	init_stacks(info);
+	
+	// 1. LLENAR LA PILA (¡Vital!)
+	parse_args(argc, argv, info);
+
+	if (info->a->size > 0)
+	{
+		insert_index(info); // Prepara los índices para Radix
+		
+	
+		info->disorder = compute_disorder(info->a);
+		if (info->disorder > 0)
+        {
+            if(info->disorder < 0.2f)
+                info->strategy = SIMPLE;
+            else if(info->disorder < 0.5f)
+                info->strategy = MEDIUM;
+            else
+                info->strategy = COMPLEX;
+			execute_strategy(info);
+        }
+		if (info->bench)
+			print_bench(info);
+	}
+	free_all(info);
+	return (0);
+}
