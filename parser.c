@@ -12,11 +12,6 @@
 
 #include "push_swap.h"
 
-// TODO
-// En parser.c, falta:
-// 2. Verificar que info->a y info->b están inicializados antes de usarlos
-// 3. En error_exit, estás llamando a free_stack con punteros no inicializados
-
 void	parse_args(int argc, char **argv, t_info *info)
 {
 	int		i;
@@ -38,20 +33,16 @@ void	parse_args(int argc, char **argv, t_info *info)
 			if (is_valid_number(args[j]))
 				process_number(args[j], info);
 			else
-				error_split(info, args); // Función que libera split y sale
+				error_split(info, args);
 			j++;
 		}
-		free_matrix(args); // ¡Vital para evitar leaks!
+		free_matrix(args);
 		i++;
 	}
 }
 
 int	is_flag(char *arg, t_info *info)
 {
-	// Aquí usarás tu ft_strncmp o similar.
-	// Si es "--bench", info->flag_bench = 1; return (1);
-	// Si es "--simple", info->strategy = SIMPLE; return (1);
-	// Si no es ninguna flag, return (0);
 	if (ft_strncmp(arg, "--bench", 8) == 0)
 		info->bench = 1;
 	else if (ft_strncmp(arg, "--adaptive", 11) == 0)
@@ -71,10 +62,6 @@ int	is_valid_number(char *arg)
 {
 	int	i;
 
-	// Bucle para ver si str[i] es '-' o '+' solo en i == 0
-	// Y que el resto sean dígitos ('0' a '9')
-	// Si hay letras o está vacío, return (0);
-	// Si todo va bien, return (1);
 	i = 0;
 	if (arg[i] == '-' || arg[i] == '+')
 		i++;
@@ -93,12 +80,9 @@ void	process_number(char *str, t_info *info)
 {
 	long	num;
 
-	// convertir en int
-	// añadir a la pila A
 	num = ft_atol(str);
 	if (num > 2147483647 || num < -2147483648)
 		error_exit(info);
-	// vamos a ver si hay duplicados.
 	if (check_dup(info->a, (int)num))
 		error_exit(info);
 	append_node(info, (int)num);
@@ -110,6 +94,7 @@ void	error_exit(t_info *info)
 	free_all(info);
 	exit(1);
 }
+
 void	free_stack(t_stack *stack)
 {
 	t_node	*curr;
@@ -182,14 +167,13 @@ void	append_node(t_info *info, int num)
 
 void	insert_index(t_info *info)
 {
-	t_node *current;
-	t_node *cmp;
-	int idx;
+	t_node	*current;
+	t_node	*cmp;
+	int		idx;
 
 	if (!info->a || info->a->size == 0)
 		return ;
 	current = info->a->top->next;
-	// Recorremos cada nodo real de la pila A
 	while (current != info->a->top)
 	{
 		idx = 0;

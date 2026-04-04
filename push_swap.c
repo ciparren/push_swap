@@ -56,26 +56,21 @@ int	main(int argc, char **argv)
 	if (!info)
 		return (1);
 	init_stacks(info);
-	
-	// 1. LLENAR LA PILA (¡Vital!)
 	parse_args(argc, argv, info);
-
 	if (info->a->size > 0)
 	{
-		insert_index(info); // Prepara los índices para Radix
-		
-	
+		insert_index(info);
 		info->disorder = compute_disorder(info->a);
 		if (info->disorder > 0)
-        {
-            if(info->disorder < 0.2f)
-                info->strategy = SIMPLE;
-            else if(info->disorder < 0.5f)
-                info->strategy = MEDIUM;
-            else
-                info->strategy = COMPLEX;
+		{
+			if (info->disorder < 0.2f)
+				info->strategy = SIMPLE;
+			else if (info->disorder < 0.5f)
+				info->strategy = MEDIUM;
+			else
+				info->strategy = COMPLEX;
 			execute_strategy(info);
-        }
+		}
 		if (info->bench)
 			print_bench(info);
 	}

@@ -11,15 +11,15 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-int total_ops(t_info *info)
+int	total_ops(t_info *info)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (i < 11)
-    {
-        info->total_ops += info->ops[i];
-        i++;
-    }
-    return info->total_ops;
+	i = 0;
+	while (i < 11)
+	{
+		info->total_ops += info->ops[i];
+		i++;
+	}
+	return (info->total_ops);
 }

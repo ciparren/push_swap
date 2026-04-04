@@ -12,29 +12,27 @@
 
 #include "push_swap.h"
 
-// Take the first element at the top of a and put it at the top of b. Do nothing if a is empty
-void    pb(t_info *info)
+void	pb(t_info *info)
 {
-    t_node	*tmp;
+	t_node	*tmp;
 
 	if (info->a->size == 0)
 		return ;
 	tmp = pop_node(info->a);
 	push_node(info->b, tmp);
-	info->ops[1]++; 
+	info->ops[1]++;
 	write(1, "pb\n", 3);
 }
 
-// Take the first element at the top of a and put it at the top of b. Do nothing if a is empty.
-void    pa(t_info *info)
+void	pa(t_info *info)
 {
-    t_node	*tmp;
+	t_node	*tmp;
 
 	if (info->b->size == 0)
 		return ;
 	tmp = pop_node(info->b);
 	push_node(info->a, tmp);
-	info->ops[0]++; 
+	info->ops[0]++;
 	write(1, "pa\n", 3);
 }
 

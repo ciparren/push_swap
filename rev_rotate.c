@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 
-
 void	reverse_rotate_stack(t_stack *stack)
 {
 	t_node	*last;
@@ -51,4 +50,3 @@ void	rrr(t_info *info)
 	write(1, "rrr\n", 4);
 	info->ops[10]++;
 }
-

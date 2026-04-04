@@ -10,25 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "push_swap.h"
+#include "push_swap.h"
 
- void solve_adaptive(t_info *info)
+void	solve_adaptive(t_info *info)
 {
-    // Calculas disorder y eliges estrategia
-    
-    if (info->disorder < 0.2f)
-    {
-        //info->strategy = SIMPLE;
-        bubblesort(info);  // O(n) (tendrías que implementar uno lineal)
-    }
-    else if (info->disorder < 0.5f)
-    {
-        //info->strategy = MEDIUM;
-        solve_medium(info);  // O(n√n) olve_medium
-    }
-    else
-    {
-        //info->strategy = COMPLEX;
-        raddix(info); // O(n log n) Cambiar a complex cuando esté
-    }
+	if (info->disorder < 0.2f)
+	{
+		bubblesort(info);
+	}
+	else if (info->disorder < 0.5f)
+	{
+		solve_medium(info);
+	}
+	else
+	{
+		raddix(info);
+	}
 }

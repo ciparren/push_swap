@@ -19,7 +19,6 @@ void	free_all(t_info *info)
 	if (info->a)
 	{
 		free_stack(info->a);
-		// No liberamos info->a porque es un puntero a struct alojado en main
 	}
 	if (info->b)
 	{

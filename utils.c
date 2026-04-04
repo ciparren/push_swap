@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 
-// atoi pero para long
 long	ft_atol(const char *nptr)
 {
 	size_t	cont;
@@ -30,8 +29,6 @@ long	ft_atol(const char *nptr)
 			signo = -1;
 		cont++;
 	}
-	// al poner un número enorme, mi result puede exploding así que
-	// añadimos una comprobasiao más
 	while (nptr[cont] >= '0' && nptr[cont] <= '9')
 	{
 		result = (result * 10) + (nptr[cont] - '0');
@@ -42,7 +39,6 @@ long	ft_atol(const char *nptr)
 	return (result * signo);
 }
 
-// strncmp para comprobar is_flag
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
@@ -57,7 +53,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-// para ver si es válido el número (is_valid)
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
@@ -81,7 +76,7 @@ const char	*get_strategy_name(int strategy)
 
 void	display_stack(t_stack *stack, char *name)
 {
-	t_node *curr;
+	t_node	*curr;
 
 	if (!stack || !stack->top)
 		return ;

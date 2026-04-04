@@ -12,64 +12,64 @@
 
 #include "push_swap.h"
 
-
-void solve_medium(t_info *info)
+void	solve_medium(t_info *info)
 {
-    chunksort(info); 
-    back_to_a(info); 
+	chunksort(info);
+	back_to_a(info);
 }
 
-void chunksort(t_info *info)
+void	chunksort(t_info *info)
 {
-    int i;
-    int range;
+	int	i;
+	int	range;
 
-    i = 0;
-    // El rango debe escalar con el tamaño de la pila
-    range = ft_sqrt(info->a->size) * 1.5; 
-    while (info->a->size > 0)
-    {
-        // Si el número entra en la "ventana" actual
-        if (info->a->top->next->index <= i + range)
-        {
-            pb(info);
-            // Si es de los muy pequeños, lo mandamos al fondo de B
-            if (info->b->size > 1 && info->b->top->next->index <= i)
-                rb(info);
-            i++;
-        }
-        else
-            ra(info);
-    }
+	i = 0;
+	range = ft_sqrt(info->a->size) * 1.5;
+	while (info->a->size > 0)
+	{
+		if (info->a->top->next->index <= i + range)
+		{
+			pb(info);
+			if (info->b->size > 1 && info->b->top->next->index <= i)
+				rb(info);
+			i++;
+		}
+		else
+			ra(info);
+	}
 }
 
-long long  ft_sqrt(long long n) {
+long long	ft_sqrt(long long n)
+{
+	long long	inicio;
+	long long	fin;
+	long long	ans;
+	long long	mid;
 
-    long long inicio;
-    long long fin; 
-    long long ans;
-
-    if (n < 0) 
-        return -1; 
-    if (n == 0 || n == 1) 
-        return n;
-    inicio = 1;
-    fin = n;
-    while (inicio <= fin) {
-        long long mid = (inicio + fin) / 2;
-
-        if (mid * mid == n) {
-            return mid;
-        }
-
-        if (mid * mid < n) {
-            inicio = mid + 1;
-            ans = mid; 
-        } else {
-            fin = mid - 1;
-        }
-    }
-    return ans;
+	if (n < 0)
+		return (-1);
+	if (n == 0 || n == 1)
+		return (n);
+	inicio = 1;
+	fin = n;
+	while (inicio <= fin)
+	{
+		mid = (inicio + fin) / 2;
+		if (mid * mid == n)
+		{
+			return (mid);
+		}
+		if (mid * mid < n)
+		{
+			inicio = mid + 1;
+			ans = mid;
+		}
+		else
+		{
+			fin = mid - 1;
+		}
+	}
+	return (ans);
 }
 
 int	get_max_pos(t_stack *b)

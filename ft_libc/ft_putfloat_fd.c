@@ -14,30 +14,29 @@
 
 static void	ft_putint_fd_rec(long long nb, int fd)
 {
-	char c;
+	char	c;
 
 	if (nb > 9)
 		ft_putint_fd_rec(nb / 10, fd);
-
 	c = '0' + nb % 10;
 	write(fd, &c, 1);
 }
 
 static void	ft_putdec_fd_rec(long long nb, int decimals, int fd)
 {
-	char c;
-    int factor;
-    int i;
+	char	c;
+	int		factor;
+	int		i;
 
 	if (decimals == 0)
-		return;
-    factor = 1;
-    i = 1;
-    while (i < decimals)
-    {
-        factor *=10;
-        i++;
-    }
+		return ;
+	factor = 1;
+	i = 1;
+	while (i < decimals)
+	{
+		factor *= 10;
+		i++;
+	}
 	c = '0' + nb / factor;
 	write(fd, &c, 1);
 	ft_putdec_fd_rec(nb % factor, decimals - 1, fd);
@@ -45,23 +44,23 @@ static void	ft_putdec_fd_rec(long long nb, int decimals, int fd)
 
 void	ft_putfloat_fd(float nb, int decimals, int fd)
 {
-	long long factor;
-	long long fl_to_long;
-	long long int_part;
-	long long dec_part;
-    int i;
+	long long	factor;
+	long long	fl_to_long;
+	long long	int_part;
+	long long	dec_part;
+	int			i;
 
-    factor = 1;
-    i = decimals;
+	factor = 1;
+	i = decimals;
 	if (fd <= 0)
-		return;
+		return ;
 	if (nb < 0)
 	{
 		write(fd, "-", 1);
 		nb = -nb;
 	}
 	while (decimals > 0 && i-- > 0)
-			factor *= 10;
+		factor *= 10;
 	fl_to_long = (long long)(nb * factor);
 	int_part = fl_to_long / factor;
 	dec_part = fl_to_long % factor;
@@ -70,9 +69,3 @@ void	ft_putfloat_fd(float nb, int decimals, int fd)
 		write(fd, ".", 1);
 	ft_putdec_fd_rec(dec_part, decimals, fd);
 }
-/*
-int main()
-{
-    ft_putfloat_fd(12.10301, 5, 1);
-    return 0;
-}*/
