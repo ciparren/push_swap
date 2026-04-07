@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	is_sorted(t_info *info)
+static int	is_sorted(t_info *info)
 {
 	t_node	*curr;
 
@@ -26,31 +26,36 @@ int	is_sorted(t_info *info)
 	return (1);
 }
 
-void	solve_two(t_info *info)
+static int	find_pos(t_info *info, int val)
 {
-	if (info->a->top->next->index > info->a->top->next->next->index)
-		sa(info);
+	t_node	*curr;
+	int		pos;
+
+	curr = info->a->top->next;
+	pos = 0;
+	while (pos < info->a->size && curr->index <= val)
+	{
+		pos++;
+		curr = curr->next;
+	}
+	return (pos);
 }
 
-void	solve_three(t_info *info)
+void	find_and_insert(t_info *info)
 {
-	int	a;
-	int	b;
-	int	c;
+	int	pos;
 
-	a = info->a->top->next->index;
-	b = info->a->top->next->next->index;
-	c = info->a->top->next->next->next->index;
-	if (a > b && b < c && a < c)
-		return (sa(info));
-	if (a > b && b > c)
-		return (sa(info), rra(info));
-	if (a > b && b < c && a > c)
-		return (ra(info));
-	if (a < b && b > c && a < c)
-		return (sa(info), ra(info));
-	if (a < b && b > c && a > c)
-		return (rra(info));
+	pos = find_pos(info, info->b->top->next->index);
+	if (pos <= info->a->size / 2)
+		while (pos-- > 0)
+			ra(info);
+	else
+	{
+		pos = info->a->size - pos;
+		while (pos-- > 0)
+			rra(info);
+	}
+	pa(info);
 }
 
 void	bubblesort(t_info *info)
@@ -63,6 +68,10 @@ void	bubblesort(t_info *info)
 		return (solve_two(info));
 	if (info->a->size == 3)
 		return (solve_three(info));
+	if (info->a->size == 4)
+		return (solve_four(info));
+	if (info->a->size == 5)
+		return (solve_five(info));
 	while (!is_sorted(info))
 	{
 		i = 0;
