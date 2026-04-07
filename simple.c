@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static int	is_sorted(t_info *info)
+int	is_sorted(t_info *info)
 {
 	t_node	*curr;
 

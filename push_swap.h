@@ -99,7 +99,7 @@ void				reverse_rotate_stack(t_stack *stack);
 void				*ft_memset(void *s, int c, size_t n);
 void				display_stack(t_stack *stack, char *name);
 void				raddix(t_info *info);
-static int			is_sorted(t_info *info);
+int					is_sorted(t_info *info);
 void				solve_two(t_info *info);
 void				solve_three(t_info *info);
 
