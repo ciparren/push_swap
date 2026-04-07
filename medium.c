@@ -56,18 +56,14 @@ long long	ft_sqrt(long long n)
 	{
 		mid = (inicio + fin) / 2;
 		if (mid * mid == n)
-		{
 			return (mid);
-		}
 		if (mid * mid < n)
 		{
 			inicio = mid + 1;
 			ans = mid;
 		}
 		else
-		{
 			fin = mid - 1;
-		}
 	}
 	return (ans);
 }

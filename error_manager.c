@@ -25,3 +25,49 @@ void	free_all(t_info *info)
 		free_stack(info->b);
 	}
 }
+
+void	error_exit(t_info *info)
+{
+	write(2, "Error\n", 6);
+	free_all(info);
+	exit(1);
+}
+
+void	free_stack(t_stack *stack)
+{
+	t_node	*curr;
+	t_node	*next_node;
+
+	if (!stack)
+		return ;
+	curr = stack->top->next;
+	while (curr != stack->top)
+	{
+		next_node = curr->next;
+		free(curr);
+		curr = next_node;
+	}
+	free(stack->top);
+	free(stack);
+}
+
+void	free_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	if (!matrix)
+		return ;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
+}
+
+void	error_split(t_info *info, char **args)
+{
+	free_matrix(args);
+	error_exit(info);
+}

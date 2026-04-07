@@ -39,7 +39,6 @@ long	ft_atol(const char *nptr)
 	return (result * signo);
 }
 
-
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
@@ -81,4 +80,18 @@ void	display_stack(t_stack *stack, char *name)
 		curr = curr->next;
 	}
 	printf("--------------------------\n");
+}
+
+int	check_dup(t_stack *a, int num)
+{
+	t_node	*curr;
+
+	curr = a->top->next;
+	while (curr != a->top)
+	{
+		if (curr->value == num)
+			return (1);
+		curr = curr->next;
+	}
+	return (0);
 }

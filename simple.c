@@ -6,36 +6,71 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 17:03:26 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/30 10:13:51 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:00:00 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// TODO hacer un algoritmo que resuelva cuando tiene solo 2,
-// 3 y 5 números la pila
+static int	is_sorted(t_info *info)
+{
+	t_node	*curr;
+
+	curr = info->a->top->next;
+	while (curr->next != info->a->top)
+	{
+		if (curr->index > curr->next->index)
+			return (0);
+		curr = curr->next;
+	}
+	return (1);
+}
+
+void	solve_two(t_info *info)
+{
+	if (info->a->top->next->index > info->a->top->next->next->index)
+		sa(info);
+}
+
+void	solve_three(t_info *info)
+{
+	int	a;
+	int	b;
+	int	c;
+
+	a = info->a->top->next->index;
+	b = info->a->top->next->next->index;
+	c = info->a->top->next->next->next->index;
+	if (a > b && b < c && a < c)
+		return (sa(info));
+	if (a > b && b > c)
+		return (sa(info), rra(info));
+	if (a > b && b < c && a > c)
+		return (ra(info));
+	if (a < b && b > c && a < c)
+		return (sa(info), ra(info));
+	if (a < b && b > c && a > c)
+		return (rra(info));
+}
 
 void	bubblesort(t_info *info)
 {
 	int	i;
-	int	swapped;
 
 	if (!info->a || info->a->size < 2)
 		return ;
-	swapped = 1;
-	while (swapped)
+	if (info->a->size == 2)
+		return (solve_two(info));
+	if (info->a->size == 3)
+		return (solve_three(info));
+	while (!is_sorted(info))
 	{
-		swapped = 0;
 		i = 0;
-		while (i < info->a->size - 1)
+		while (i++ < info->a->size - 1)
 		{
 			if (info->a->top->next->index > info->a->top->next->next->index)
-			{
 				sa(info);
-				swapped = 1;
-			}
 			ra(info);
-			i++;
 		}
 		ra(info);
 	}

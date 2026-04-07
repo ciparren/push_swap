@@ -21,13 +21,10 @@ void	parse_args(int argc, char **argv, t_info *info)
 	i = 1;
 	while (i < argc)
 	{
-		if (is_flag(argv[i], info))
-		{
-			i++;
+		if (is_flag(argv[i++], info))
 			continue ;
-		}
 		args = ft_split(argv[i], ' ');
-		if(!args)
+		if (!args)
 			error_exit(info);
 		j = 0;
 		while (args[j])
@@ -90,66 +87,6 @@ void	process_number(char *str, t_info *info)
 	append_node(info, (int)num);
 }
 
-void	error_exit(t_info *info)
-{
-	write(2, "Error\n", 6);
-	free_all(info);
-	exit(1);
-}
-
-void	free_stack(t_stack *stack)
-{
-	t_node	*curr;
-	t_node	*next_node;
-
-	if (!stack)
-		return ;
-	curr = stack->top->next;
-	while (curr != stack->top)
-	{
-		next_node = curr->next;
-		free(curr);
-		curr = next_node;
-	}
-	free(stack->top);
-	free(stack);
-}
-
-void	free_matrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	if (!matrix)
-		return ;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
-}
-
-void	error_split(t_info *info, char **args)
-{
-	free_matrix(args);
-	error_exit(info);
-}
-
-int	check_dup(t_stack *a, int num)
-{
-	t_node	*curr;
-
-	curr = a->top->next;
-	while (curr != a->top)
-	{
-		if (curr->value == num)
-			return (1);
-		curr = curr->next;
-	}
-	return (0);
-}
-
 void	append_node(t_info *info, int num)
 {
 	t_node	*to_append;
@@ -165,28 +102,4 @@ void	append_node(t_info *info, int num)
 	last->next = to_append;
 	info->a->top->prev = to_append;
 	info->a->size++;
-}
-
-void	insert_index(t_info *info)
-{
-	t_node	*current;
-	t_node	*cmp;
-	int		idx;
-
-	if (!info->a || info->a->size == 0)
-		return ;
-	current = info->a->top->next;
-	while (current != info->a->top)
-	{
-		idx = 0;
-		cmp = info->a->top->next;
-		while (cmp != info->a->top)
-		{
-			if (cmp->value < current->value)
-				idx++;
-			cmp = cmp->next;
-		}
-		current->index = idx;
-		current = current->next;
-	}
 }

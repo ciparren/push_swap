@@ -46,6 +46,16 @@ static void	execute_strategy(t_info *info)
 		solve_adaptive(info);
 }
 
+static void	set_strategy(t_info *info)
+{
+	if (info->disorder < 0.2f)
+		info->strategy = SIMPLE;
+	else if (info->disorder < 0.5f)
+		info->strategy = MEDIUM;
+	else
+		info->strategy = COMPLEX;
+}
+
 int	main(int argc, char **argv)
 {
 	t_info	*info;
@@ -62,15 +72,8 @@ int	main(int argc, char **argv)
 		insert_index(info);
 		info->disorder = compute_disorder(info->a);
 		if (info->strategy == ADAPTIVE && info->disorder > 0)
-		{
-			if (info->disorder < 0.2f)
-				info->strategy = SIMPLE;
-			else if (info->disorder < 0.5f)
-				info->strategy = MEDIUM;
-			else
-				info->strategy = COMPLEX;
-			execute_strategy(info);
-		}
+			set_strategy(info);
+		execute_strategy(info);
 		if (info->bench)
 			print_bench(info);
 	}

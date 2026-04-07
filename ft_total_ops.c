@@ -23,3 +23,27 @@ int	total_ops(t_info *info)
 	}
 	return (info->total_ops);
 }
+
+void	insert_index(t_info *info)
+{
+	t_node	*current;
+	t_node	*cmp;
+	int		idx;
+
+	if (!info->a || info->a->size == 0)
+		return ;
+	current = info->a->top->next;
+	while (current != info->a->top)
+	{
+		idx = 0;
+		cmp = info->a->top->next;
+		while (cmp != info->a->top)
+		{
+			if (cmp->value < current->value)
+				idx++;
+			cmp = cmp->next;
+		}
+		current->index = idx;
+		current = current->next;
+	}
+}
