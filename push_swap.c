@@ -60,8 +60,13 @@ int	main(int argc, char **argv)
 	if (info->a->size > 0)
 	{
 		insert_index(info);
-		info->disorder = compute_disorder(info->a);
-		execute_strategy(info);
+		if (info->a->size <= 5)
+			bubblesort(info);
+		else
+		{
+			info->disorder = compute_disorder(info->a);
+			execute_strategy(info);
+		}
 		if (info->bench)
 			print_bench(info);
 	}

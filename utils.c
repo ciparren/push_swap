@@ -39,13 +39,6 @@ long	ft_atol(const char *nptr)
 	return (result * signo);
 }
 
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
 const char	*get_strategy_name(int strategy)
 {
 	if (strategy == SIMPLE)
@@ -94,4 +87,45 @@ int	check_dup(t_stack *a, int num)
 		curr = curr->next;
 	}
 	return (0);
+}
+
+int	get_min_pos(t_stack *a)
+{
+	t_node	*curr;
+	int		min_idx;
+	int		min_pos;
+	int		i;
+
+	curr = a->top->next;
+	min_idx = curr->index;
+	min_pos = 0;
+	i = 0;
+	while (i < a->size)
+	{
+		if (curr->index < min_idx)
+		{
+			min_idx = curr->index;
+			min_pos = i;
+		}
+		curr = curr->next;
+		i++;
+	}
+	return (min_pos);
+}
+
+void	push_min_to_b(t_info *info)
+{
+	int	pos;
+
+	pos = get_min_pos(info->a);
+	if (pos <= info->a->size / 2)
+		while (pos-- > 0)
+			ra(info);
+	else
+	{
+		pos = info->a->size - pos;
+		while (pos-- > 0)
+			rra(info);
+	}
+	pb(info);
 }

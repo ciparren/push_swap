@@ -26,45 +26,11 @@ int	is_sorted(t_info *info)
 	return (1);
 }
 
-int	find_pos(t_info *info, int val)
-{
-	t_node	*curr;
-	int		pos;
-
-	curr = info->a->top->next;
-	pos = 0;
-	while (pos < info->a->size && curr->index <= val)
-	{
-		pos++;
-		curr = curr->next;
-	}
-	return (pos);
-}
-
-void	find_and_insert(t_info *info)
-{
-	int	pos;
-
-	pos = find_pos(info, info->b->top->next->index);
-	if (pos <= info->a->size / 2)
-		while (pos-- > 0)
-			ra(info);
-	else
-	{
-		pos = info->a->size - pos;
-		while (pos-- > 0)
-			rra(info);
-	}
-	pa(info);
-}
-
 void	bubblesort(t_info *info)
 {
 	int	i;
 
-	if (!info->a || info->a->size < 2)
-		return ;
-	if (is_sorted(info))
+	if (!info->a || info->a->size < 2 || is_sorted(info))
 		return ;
 	if (info->a->size == 2)
 		return (solve_two(info));

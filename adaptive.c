@@ -6,36 +6,25 @@
 /*   By: ciparren <ciparren@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 18:17:47 by cintia            #+#    #+#             */
-/*   Updated: 2026/03/30 10:22:03 by ciparren         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:21:42 by ciparren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "push_swap.h"
-
-void	solve_adaptive(t_info *info)
-{
-	if (info->disorder < 0.2f)
-		bubblesort(info);
-	else if (info->disorder < 0.5f)
-		solve_medium(info);
-	else
-		raddix(info);
-}
 
 void	solve_four(t_info *info)
 {
-	pb(info);
+	push_min_to_b(info);
 	solve_three(info);
-	find_and_insert(info);
+	pa(info);
 }
 
 void	solve_five(t_info *info)
 {
-	pb(info);
-	pb(info);
+	push_min_to_b(info);
+	push_min_to_b(info);
 	solve_three(info);
-	find_and_insert(info);
-	find_and_insert(info);
+	pa(info);
+	pa(info);
 }
 
 void	solve_two(t_info *info)
@@ -63,4 +52,14 @@ void	solve_three(t_info *info)
 		return (sa(info), ra(info));
 	if (a < b && b > c && a > c)
 		return (rra(info));
+}
+
+void	solve_adaptive(t_info *info)
+{
+	if (info->disorder < 0.2f)
+		bubblesort(info);
+	else if (info->disorder < 0.5f)
+		solve_medium(info);
+	else
+		raddix(info);
 }

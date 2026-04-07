@@ -24,6 +24,7 @@ void	free_all(t_info *info)
 	{
 		free_stack(info->b);
 	}
+	free(info);
 }
 
 void	error_exit(t_info *info)
