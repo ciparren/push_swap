@@ -61,7 +61,7 @@ int	main(int argc, char **argv)
 	{
 		insert_index(info);
 		info->disorder = compute_disorder(info->a);
-		if (info->disorder > 0)
+		if (info->strategy == ADAPTIVE && info->disorder > 0)
 		{
 			if (info->disorder < 0.2f)
 				info->strategy = SIMPLE;

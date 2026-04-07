@@ -9,7 +9,7 @@
 /*   Updated: 2026/01/21 19:09:32 by gamercha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <bsd/string.h>
+#include <string.h>
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {

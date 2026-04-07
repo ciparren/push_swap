@@ -85,7 +85,7 @@ void				bench_total_ops(t_info *info);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
-void				ft_putfloat_fd(float num, int fd, int precision);
+void				ft_putfloat_fd(float nb, int decimals, int fd);
 char				**ft_split(char const *s, char c);
 void				chunksort(t_info *info);
 void				free_matrix(char **matrix);

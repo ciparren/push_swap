@@ -17,24 +17,18 @@ void	swap_stack(t_stack *s)
 	t_node	*first;
 	t_node	*second;
 	t_node	*third;
-	t_node	*last;
 
-	if (s->size < 2)
+	if (!s || s->size < 2)
 		return ;
 	first = s->top->next;
 	second = first->next;
-	if (s->size > 2)
-	{
-		last = s->top->prev;
-		third = second->next;
-		last->next = s->top;
-		second->prev = s->top;
-		third->prev = first;
-		first->next = third;
-		second->next = first;
-		first->prev = second;
-	}
+	third = second->next;
 	s->top->next = second;
+	second->prev = s->top;
+	second->next = first;
+	first->prev = second;
+	first->next = third;
+	third->prev = first;
 }
 
 void	sa(t_info *info)
