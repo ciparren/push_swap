@@ -17,11 +17,11 @@ static void	init_stacks(t_info *info)
 	info->a = malloc(sizeof(t_stack));
 	info->b = malloc(sizeof(t_stack));
 	if (!info->a || !info->b)
-		exit(1);
+		error_exit(info);
 	info->a->top = malloc(sizeof(t_node));
 	info->b->top = malloc(sizeof(t_node));
 	if (!info->a->top || !info->b->top)
-		exit(1);
+		error_exit(info);
 	info->a->top->next = info->a->top;
 	info->a->top->prev = info->a->top;
 	info->a->size = 0;
@@ -60,13 +60,11 @@ int	main(int argc, char **argv)
 	if (info->a->size > 0)
 	{
 		insert_index(info);
+		info->disorder = compute_disorder(info->a);
 		if (info->a->size <= 5)
 			bubblesort(info);
 		else
-		{
-			info->disorder = compute_disorder(info->a);
 			execute_strategy(info);
-		}
 		if (info->bench)
 			print_bench(info);
 	}
