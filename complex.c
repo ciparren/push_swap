@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h" // TODO
+#include "push_swap.h"
 
 void	raddix(t_info *info)
 {
