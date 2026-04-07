@@ -15,17 +15,11 @@
 void	solve_adaptive(t_info *info)
 {
 	if (info->disorder < 0.2f)
-	{
 		bubblesort(info);
-	}
 	else if (info->disorder < 0.5f)
-	{
 		solve_medium(info);
-	}
 	else
-	{
 		raddix(info);
-	}
 }
 
 void	solve_four(t_info *info)

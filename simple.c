@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static int	is_sorted(t_info *info)
+int	is_sorted(t_info *info)
 {
 	t_node	*curr;
 
@@ -26,7 +26,7 @@ static int	is_sorted(t_info *info)
 	return (1);
 }
 
-static int	find_pos(t_info *info, int val)
+int	find_pos(t_info *info, int val)
 {
 	t_node	*curr;
 	int		pos;
@@ -63,6 +63,8 @@ void	bubblesort(t_info *info)
 	int	i;
 
 	if (!info->a || info->a->size < 2)
+		return ;
+	if (is_sorted(info))
 		return ;
 	if (info->a->size == 2)
 		return (solve_two(info));

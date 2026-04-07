@@ -102,6 +102,10 @@ void				raddix(t_info *info);
 int					is_sorted(t_info *info);
 void				solve_two(t_info *info);
 void				solve_three(t_info *info);
+void				solve_four(t_info *info);
 int					find_pos(t_info *info, int val);
+void				find_and_insert(t_info *info);
+void				solve_five(t_info *info);
+
 
 #endif

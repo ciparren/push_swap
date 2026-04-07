@@ -21,7 +21,7 @@ void	parse_args(int argc, char **argv, t_info *info)
 	i = 1;
 	while (i < argc)
 	{
-		if (is_flag(argv[i], info) && ++i)
+		if (is_flag(argv[i], info) && ++i) // PROBLEMA
 			continue ;
 		args = ft_split(argv[i], ' ');
 		if (!args)
